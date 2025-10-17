@@ -1,47 +1,58 @@
-from .tasks import Task
+from tasks import Task
+import os
+import gc
+from dotenv import load_dotenv, dotenv_values
+
+# loading environment variables
+MAX_LEN_OF_PROJ_NAME = os.getenv("MAX_LEN_OF_PROJ_NAME")
+MAX_LEN_OF_PROJ_DESC = os.getenv("MAX_LEN_OF_PROJ_DESC")
+MAX_NUMBER_OF_PROJECTS = os.getenv("MAX_NUMBER_OF_PROJECTS")
 
 class Project:
 
     def __init__ (self, name: str):
+        if name.len() > MAX_LEN_OF_PROJ_NAME:
+            raise TypeError("max length of a project name exceeded")
+        
         self._name = name
         self._desc = ""
         self._tasks: list[Task] = []
 
     @property
-    def name (self):
+    def name(self):
         return str(self._name)
     
     @name.setter
-    def name (self, new_value: str):
+    def name(self, new_value: str):
+        if new_value.len() > MAX_LEN_OF_PROJ_NAME:
+            raise TypeError("max length of a project name exceeded")
+        
         self._name = str(new_value)
 
     @property
-    def desc (self):
+    def desc(self):
         return str(self._desc)
     
     @desc.setter
-    def desc (self, new_desc: str):
+    def desc(self, new_desc: str):
+        if new_desc.len() > MAX_LEN_OF_PROJ_DESC:
+            raise TypeError("max length of a project describtion exceeded")
         self._desc = str(new_desc)
 
     @property
-    def task (self):
+    def task(self):
         return list(self._tasks)
     
     @task.setter
-    def task (self, tasks: list[Task]):
-
-#       if not isinstance(task, list[Task]):
-#           raise TypeError("add_task expects a Task instance")
-# not sure what am i doing with the if statement here. but i know
-#  it's wrong in this way
-        
+    def task(self, tasks: list[Task]):
         self._tasks = list(tasks)
 
-    def remove_proj (self): 
-        ...
-        # to perform a cascade delete, this method
-        # first remove the project from the project list and then
-        # remove every task related to the deleted project from the
-        # tasks list.
-        # i think i should make a separated file and store the list
-        # of all the Project instances/ Task instances.
+    def add_task(self, task: Task):
+        self._tasks.append(task)
+
+    def remove_task(self, task: Task):
+        self._tasks.remove(task)
+
+    def remove_all_tasks(self):
+        self._tasks.clear() # removes references to task objects
+        gc.collect()
