@@ -1,3 +1,6 @@
+import os
+from dotenv import load_dotenv, dotenv_values
+
 class Task:
 
     def __init__(self, title: str, desc: str, deadline: str):

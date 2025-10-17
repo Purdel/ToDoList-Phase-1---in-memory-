@@ -7,6 +7,7 @@ from dotenv import load_dotenv, dotenv_values
 MAX_LEN_OF_PROJ_NAME = os.getenv("MAX_LEN_OF_PROJ_NAME")
 MAX_LEN_OF_PROJ_DESC = os.getenv("MAX_LEN_OF_PROJ_DESC")
 MAX_NUMBER_OF_PROJECTS = os.getenv("MAX_NUMBER_OF_PROJECTS")
+MAX_NUMBER_OF_TASKS = os.getenv("MAX_NUMBER_OF_TASKS")
 
 class Project:
 
@@ -48,6 +49,8 @@ class Project:
         self._tasks = list(tasks)
 
     def add_task(self, task: Task):
+        if self._tasks.len() == MAX_NUMBER_OF_TASKS:
+            raise TypeError("max number of tasks for this project reached")
         self._tasks.append(task)
 
     def remove_task(self, task: Task):
