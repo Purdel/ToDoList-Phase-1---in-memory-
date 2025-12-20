@@ -1,4 +1,4 @@
-from tasks import Task
+from app.models.tasks import Task
 import os
 import gc
 from dotenv import load_dotenv

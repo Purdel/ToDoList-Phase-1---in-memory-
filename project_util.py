@@ -1,4 +1,4 @@
-from project import Project
+from app.models.project import Project
 import os
 from dotenv import load_dotenv
 

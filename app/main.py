@@ -1,7 +1,7 @@
 # testing some of the features
 
-from project import Project
-from tasks import Task
+from app.models.project import Project
+from app.models.tasks import Task
 import project_util as util
 from date import Date
 
