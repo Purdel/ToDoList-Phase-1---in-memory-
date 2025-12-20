@@ -10,6 +10,8 @@ proj2 = Project(name = "test2", desc = "testing again")
 util.add_project(proj1)
 util.add_project(proj2)
 
+# testing
+
 date1 = Date(day = 7, month = 8, year = 1404)
 task1 = Task(title = "task1", desc = "first task", deadline = date1)
 
