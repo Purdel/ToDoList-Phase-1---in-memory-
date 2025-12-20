@@ -1,25 +1,21 @@
-# testing some of the features
+from app.repositories.inmemory_project_repository import InMemoryProjectRepository
+from app.services.project_service import ProjectService
+from app.cli.console import Console
 
-from app.models.project import Project
-from app.models.tasks import Task
-import project_util as util
-from date import Date
 
-proj1 = Project(name = "test1", desc = "testing")
-proj2 = Project(name = "test2", desc = "testing again")
-util.add_project(proj1)
-util.add_project(proj2)
+# wiring dependencies
+repo = InMemoryProjectRepository()
+project_service = ProjectService(repo)
+console = Console(project_service)
 
-# testing
 
-date1 = Date(day = 7, month = 8, year = 1404)
-task1 = Task(title = "task1", desc = "first task", deadline = date1)
+# demo usage
+project_service.create_project("test1", "testing")
+project_service.create_project("test2", "testing again")
 
-proj1.add_task(task1)
-proj1.show()
 
-proj1.show_tasks()
+console.show_projects()
 
-util.project_show()
-util.remove_project("test2")
-util.project_show()
+
+project_service.delete_project("test2")
+console.show_projects()
